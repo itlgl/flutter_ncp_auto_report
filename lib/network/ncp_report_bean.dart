@@ -14,6 +14,13 @@ class NcpInfoBean {
           : new NcpInfoBean.fromJson(jsonStr);
 
   NcpInfoBean.fromJson(jsonRes) {
+    if(jsonRes == null) {
+      return;
+    }
+    if(jsonRes is String) {
+      jsonRes = json.decode(jsonRes);
+    }
+
     code = jsonRes['code'];
     msg = jsonRes['msg'];
     data = jsonRes['data'] == null ? null : [];
@@ -38,6 +45,13 @@ class NcpInfoData {
       {this.departmentId, this.departmentName, this.subDepartmentNameList});
 
   NcpInfoData.fromJson(jsonRes) {
+    if(jsonRes == null) {
+      return;
+    }
+    if(jsonRes is String) {
+      jsonRes = json.decode(jsonRes);
+    }
+
     departmentId = jsonRes['departmentId'];
     departmentName = jsonRes['departmentName'];
     subDepartmentNameList =
@@ -95,6 +109,13 @@ class NcpReportBean {
           : new NcpReportBean.fromJson(jsonStr);
 
   NcpReportBean.fromJson(jsonRes) {
+    if(jsonRes == null) {
+      return;
+    }
+    if(jsonRes is String) {
+      jsonRes = json.decode(jsonRes);
+    }
+
     attentionFlag = jsonRes['attentionFlag'];
     contactWuhan = jsonRes['contactWuhan'];
     departmentId = jsonRes['departmentId'];
@@ -142,9 +163,15 @@ class NcpResultBean {
 
   NcpResultBean({this.msg, this.code});
 
-  NcpResultBean.fromJson(Map<String, dynamic> json) {
-    msg = json['msg'];
-    code = json['code'];
+  NcpResultBean.fromJson(jsonStr) {
+    if(jsonStr == null) {
+      return;
+    }
+    if(jsonStr is String) {
+      jsonStr = json.decode(jsonStr);
+    }
+    msg = jsonStr['msg'];
+    code = jsonStr['code'];
   }
 
   Map<String, dynamic> toJson() {

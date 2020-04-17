@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:ncpautoreport/network/ncp_report_bean.dart';
 import 'dart:convert' show json;
@@ -5,10 +7,11 @@ import 'package:date_format/date_format.dart' as date_format;
 
 class NcpReportApi {
   static Dio dio = Dio();
-
+  // 正常访问host  es.hbgf.net.cn 就可以了
+  // web因为accessControll的原因需要访问代理服务器中转
   Future<NcpResultBean> ncpReport(NcpReportBean bean) async {
     var response = await dio.post(
-        'http://es.hbgf.net.cn:9004/form/info/collect',
+        'http://39.106.224.87:9004/form/info/collect',
         data: json.encode(bean),
         options: Options(
             contentType: 'application/json', responseType: ResponseType.json));
@@ -18,13 +21,16 @@ class NcpReportApi {
 
   Future<NcpInfoBean> getNcpInfo() async {
     var response =
-        await dio.get('http://es.hbgf.net.cn:9004/form/info/department');
-    //print('response=${response.data}');
+            await dio.get('http://39.106.224.87:9004/form/info/department',
+                options: Options(
+                    contentType: 'application/json', responseType: ResponseType.json));
+    print('response=${response.data}');
+    print(response.data.runtimeType);
     NcpInfoBean bean = NcpInfoBean.fromJson(response.data);
     print('bean=$bean');
     if(bean == null) {
-      return Future.error('bean is null');
-    }
+          return Future.error('bean is null');
+        }
     return bean;
   }
 

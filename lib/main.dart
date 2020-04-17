@@ -87,12 +87,13 @@ class _MyHomePageState extends State<MyHomePage> {
     });
     //NcpReportApi().getNcpInfo();
 
-    NcpReportApi().reportForLigl().then((value) {
-      DialogUtils.showTipDialog(context,
-          value.msg == null || value.msg.length == 0 ? '上报失败' : value.msg);
-    }, onError: (error, StackTrace stack) {
-      DialogUtils.showTipDialog(context, 'error:${error.toString()}');
-    });
+//    NcpReportApi().reportForLigl().then((value) {
+//      DialogUtils.showTipDialog(context,
+//          value.msg == null || value.msg.length == 0 ? '上报失败' : value.msg);
+//    }, onError: (error, StackTrace stack) {
+//      DialogUtils.showTipDialog(context, 'error:${error.toString()}');
+//    });
+    NcpReportApi().getNcpInfo().then((value) => print(value));
   }
 
   @override

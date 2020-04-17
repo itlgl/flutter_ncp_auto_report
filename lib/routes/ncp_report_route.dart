@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 //import 'dart:ffi';
 
 import 'package:date_format/date_format.dart';
@@ -43,6 +44,7 @@ class _NcpReportRoute extends State<NcpReportRoute> {
                   DialogUtils.showTipDialog(context,
                       value.msg == null || value.msg.length == 0 ? '上报失败' : value.msg);
                 }, onError: (e, stack) {
+                  print('e=$e,stack=$stack');
                   DialogUtils.showTipDialog(context, 'error:${e.toString()}');
                 });
               }
@@ -67,6 +69,7 @@ class _NcpReportView extends StatefulWidget {
 class _NcpReportViewState extends State<_NcpReportView> {
   NcpInfoBean ncpInfoBean;
   NcpReportBean ncpReportBean;
+  String reportedDate;
 
   GlobalKey<FormState> formKey = new GlobalKey<FormState>();
   Set<String> yesterdayTrailSet = Set<String>();
@@ -93,6 +96,7 @@ class _NcpReportViewState extends State<_NcpReportView> {
       builder: (BuildContext context, AsyncSnapshot<_NcpFutureBean> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           if (snapshot.hasError) {
+            print(snapshot.error);
             return buildErrorView();
           } else {
             ncpInfoBean = snapshot.data.ncpInfoBean;
@@ -183,6 +187,8 @@ class _NcpReportViewState extends State<_NcpReportView> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
+
+
               TextFormField(
                 decoration: InputDecoration(labelText: '*填报日期'),
                 enabled: false,
